@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  mysql:
+    container_name: 'mysql-migration'
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db-client
+    ports:
+      - "3306:3306"
+    volumes:
+      - /path/on/host:/var/lib/mysql
+  postgresql:
+    container_name: 'postgresql-migration'
+    image: postgres
+    restart: always
+    volumes:
+      - type: tmpfs
+        target: /dev/shm
+        tmpfs:
+          size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_DB: db-cadastral
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
